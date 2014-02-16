@@ -94,7 +94,14 @@ module ActiveAdmin
           item[data]
         end
         value = pretty_format(value) if data.is_a?(Symbol)
+        value = status_tag value     if is_boolean? data, item
         value
+      end
+
+      def is_boolean?(data, item)
+        if item.respond_to? :column_for_attribute
+          attr = item.column_for_attribute(data) and attr.type == :boolean 
+        end
       end
 
       # Returns an array for the current sort order

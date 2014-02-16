@@ -4,7 +4,7 @@ describe ActiveAdmin::Views::TableFor do
   describe "creating with the dsl" do
 
     let(:collection) do
-      [Post.new(:title => "First Post"), Post.new(:title => "Second Post"), Post.new(:title => "Third Post")]
+      [Post.new(:title => "First Post", :starred => true), Post.new(:title => "Second Post"), Post.new(:title => "Third Post", :starred => false)]
     end
 
     let(:assigns){ { :collection => collection } }
@@ -176,6 +176,23 @@ describe ActiveAdmin::Views::TableFor do
         expect(table.find_by_tag("th")[0].content).to eq "Foo"
         expect(table.find_by_tag("td")[0].content).to eq "1"
         expect(table.find_by_tag("td")[1].content).to eq "2"
+      end
+    end
+
+    context "when record attribute is boolean" do
+      let(:table) do
+        render_arbre_component assigns, helpers do
+          table_for(collection) do
+            column :starred
+          end
+        end
+      end
+      
+      it "should render boolean attribute within status tag" do
+        expect(table.find_by_tag("span").first.class_list.to_a.join(' ')).to eq "status_tag yes"
+        expect(table.find_by_tag("span").first.content).to eq "Yes"
+        expect(table.find_by_tag("span").last.class_list.to_a.join(' ')).to eq "status_tag no"
+        expect(table.find_by_tag("span").last.content).to eq "No"
       end
     end
 

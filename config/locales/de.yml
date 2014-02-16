@@ -75,6 +75,17 @@ de:
       errors:
         empty_text: "Der Kommentar wurde nicht gespeichert, da der Text fehlt."
     devise:
+      username:
+        title: "Benutzername"
+      email:
+        title: "E-Mail-Adresse"
+      subdomain:
+        title: "Subdomain"
+      password:
+        title: "Passwort"
+      sign_up:
+        title: "Registrieren"
+        submit: "Registrieren"
       login:
         title: "Login"
         remember_me: "erinnere dich an mich"
@@ -120,3 +131,12 @@ de:
     sessions:
       admin_user:
         signed_in: Erfolgreich als Administrator angemeldet.
+  formtastic:
+    yes: "Ja"
+    no: "Nein"
+    create: "%{model} anlegen"
+    update: "%{model} aktualisieren"
+    submit: "Abschicken"
+    cancel: "Abbrechen"
+    reset: "%{model} zurücksetzen"
+    required: "Pflichtfeld"
