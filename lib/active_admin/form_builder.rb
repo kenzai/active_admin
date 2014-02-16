@@ -99,7 +99,7 @@ module ActiveAdmin
         inputs options, &form_block
 
         buttons = ''.html_safe
-        buttons << js_for_has_many_add(assoc, form_block, template, builder_options[:new_record]) if builder_options[:new_record]
+        buttons << js_for_has_many_add(assoc, form_block, template, builder_options[:new_record], options[:class]) if builder_options[:new_record]
         buttons << js_for_has_many_destroy(assoc, form_block, template, builder_options[:allow_destroy]) if builder_options[:allow_destroy]
         form_buffers.last << if buttons.present?
           template.content_tag :div, buttons, class: "has_many_buttons"
@@ -172,13 +172,13 @@ module ActiveAdmin
     end
 
     # Capture the ADD JS
-    def js_for_has_many_add(assoc, form_block, template, new_record)
+    def js_for_has_many_add(assoc, form_block, template, new_record, class_string)
       assoc_reflection = object.class.reflect_on_association assoc
       assoc_name       = _assoc_name(assoc)
       placeholder      = "NEW_#{assoc_name.to_s.upcase.split(' ').join('_')}_RECORD"
       opts = {
         :for         => [assoc, assoc_reflection.klass.new],
-        :class       => "inputs has_many_fields",
+        :class       => class_string,
         :for_options => { child_index: placeholder }
       }
       html = with_new_form_buffer{ inputs_for_nested_attributes opts, &form_block }
